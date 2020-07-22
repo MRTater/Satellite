@@ -1,2 +1,2 @@
 # Satellite
-Simulation program for satellite network base on MATLAB
+Simulation program for satellite network based on MATLAB
