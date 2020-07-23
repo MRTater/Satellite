@@ -1,10 +1,10 @@
 
 
 function [Avaliable,Distance] = SatelliteDistance(AngleOfTwoOrbit,r,AngleOfr1,AngleOfr2)
-%SATELLITE Compute distance between two satellite
+% SATELLITE Compute distance between two satellite
  instance = 2 * r^2 * (cos(AngleOfr1) * cos(AngleOfr2) + sin(AngleOfr1) * sin(AngleOfr2) * cos(AngleOfTwoOrbit));
  Distance = sqrt(2 * r ^ 2 - instance);
-%  2703.8121 = sqrt((RofEarth + RofSatellite +atmosphere)^2 -(RofEarth + atmosphere)^2)
+%  2703.8121 = sqrt((RofEarth + RofSatellite + atmosphere)^2 -(RofEarth + atmosphere)^2)
 %  Maximum distance/angle between two satellite
  if Distance > 2703.8121 * 2
      Avaliable = -1;
