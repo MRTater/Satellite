@@ -2,8 +2,6 @@ cla reset;
 load topo;
 r = 6371;
 s = drawSphere(6371,0,0,0);
-% data-structre-storing-the-data
-% random thing for only test use
 
 %% build the structure that storing orbit data and satellite data
 %Temporarily settings for testing. Values of the parameter can be modified later
