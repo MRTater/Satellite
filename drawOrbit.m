@@ -3,7 +3,7 @@ function drawOrbit(orbits,num_of_orbit)
 
 for i = 1 : num_of_orbit
     r = orbits(i).height + 6371;
-    normalVector = [cos(orbits(i).polar) * sin(orbits(i).azim) sin(orbits(i).azim) * sin(orbits(i).polar) cos(orbits(i).polar)];
+    normalVector = [sin(orbits(i).polar) * cos(orbits(i).azim) sin(orbits(i).azim) * sin(orbits(i).polar) cos(orbits(i).polar)];
     c = [0 0 0];
     theta = (0:2 * pi / 100 : 2 * pi);
     a = cross(normalVector,[1 0 0]);
