@@ -1,6 +1,6 @@
 function drawOrbit(orbits,num_of_orbit)
-%DRAWORBIT 此处显示有关此函数的摘要
-%   此处显示详细说明
+%This function draws all satellite orbits in the same figure of the earth
+
 for i = 1 : num_of_orbit
     r = orbits(i).height + 6371;
     normalVector = [cos(orbits(i).polar) * sin(orbits(i).azim) sin(orbits(i).azim) * sin(orbits(i).polar) cos(orbits(i).polar)];
@@ -18,9 +18,9 @@ for i = 1 : num_of_orbit
     c2=c(2)*ones(size(theta,1),1);
     c3=c(3)*ones(size(theta,1),1);
 
-    x=c1+r*a(1)*cos(theta)+r*b(1)*sin(theta);%圆上各点的x坐标
-    y=c2+r*a(2)*cos(theta)+r*b(2)*sin(theta);%圆上各点的y坐标
-    z=c3+r*a(3)*cos(theta)+r*b(3)*sin(theta);%圆上各点的z坐标
+    x=c1+r*a(1)*cos(theta)+r*b(1)*sin(theta);%  x coordinate in the circle
+    y=c2+r*a(2)*cos(theta)+r*b(2)*sin(theta);%  y coordinate in the circle
+    z=c3+r*a(3)*cos(theta)+r*b(3)*sin(theta);%  z coordinate in the circle
 
     plot3(x,y,z)
 end
