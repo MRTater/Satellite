@@ -24,5 +24,6 @@ for i = 1 : num_of_orbit
 
     plot3(x,y,z)
 end
+
 end
 
