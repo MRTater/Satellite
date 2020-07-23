@@ -1,4 +1,4 @@
-function orbits = constructOrbits(orbitHeight,num_of_orbit,num_of_satellites_each,input_polar_angle,input_azimuthal_angle)
+function [orbits,satellite_positions] = constructOrbits(orbitHeight,num_of_orbit,num_of_satellites_each,input_polar_angle,input_azimuthal_angle)
 %CONSTRUCTORBIT 此处显示有关此函数的摘要
 %   此处显示详细说明
 %   struct array that storing orbit data. 
