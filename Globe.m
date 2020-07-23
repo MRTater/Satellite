@@ -2,6 +2,7 @@ cla reset;
 load topo;
 r = 6371;
 s = drawSphere(6371,0,0,0);
+% data-structre-storing-the-data
 % random thing for only test use
 
 %% build the structure that storing orbit data and satellite data
@@ -35,19 +36,4 @@ for i = 1 : num_of_orbit
     % satellites are equally spaced, so can use the linspace function
     satellite_positions(i,:) = linspace(0, 2 * pi, num_of_satellites_each);
 end
-
 %%
-
-
-
-
-
-
-
-
-
-
-
-
-
-
