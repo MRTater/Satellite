@@ -1,8 +1,9 @@
 %% draw the earth
 cla reset;
 load topo;
+global r;           % earth radius
 r = 6371;
-s = drawSphere(6371,0,0,0);
+s = drawSphere(r, 0, 0, 0);
 hold on;
 %% build the structure that storing orbit data and satellite data
 %Temporarily settings for testing. Values of the parameter can be modified later
