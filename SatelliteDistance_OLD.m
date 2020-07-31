@@ -1,4 +1,4 @@
-function [Avaliable,Distance] = OLD_SatelliteDistance(AngleOfTwoOrbit,r,AngleOfr1,AngleOfr2)
+function [Avaliable,Distance] = SatelliteDistance_OLD(AngleOfTwoOrbit,r,AngleOfr1,AngleOfr2)
 % SATELLITE Compute distance between two satellite
  instance = 2 * r^2 * (cos(AngleOfr1) * cos(AngleOfr2) + sin(AngleOfr1) * sin(AngleOfr2) * cos(AngleOfTwoOrbit));
  Distance = sqrt(2 * r ^ 2 - instance);
@@ -8,5 +8,7 @@ function [Avaliable,Distance] = OLD_SatelliteDistance(AngleOfTwoOrbit,r,AngleOfr
      Avaliable = -1;
  else
      Avaliable = 1;
+ end
+
 end
 
