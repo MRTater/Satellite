@@ -1,5 +1,3 @@
-
-
 function S = add_an_orbit(Height, Polar, Azim, Num_satellite)
 %add_an_orbit Add an orbit to the globe. Return one entry to the "orbits" struct array.
 %   Height : orbit height
