@@ -1,9 +1,11 @@
 function positions = initializeSatellitePositions(N, n)
-%   the matrix of size num_of_orbit * num_of_satellites_each,
+%   returns：the matrix of size num_of_orbit * num_of_satellites_each,
 %   storing satellites position(with respect to their orbit).
+%   the j th satellite in the i th orbit is assigned  with th index Mij(M denotes the matrix)
 %   satellite position can be determined by γ(in radian), the angle rotated in the 
 %   plane(measured counterclockwise), which this matrix's entries store.
-%   set !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! as γ = 0.
+
+%   for the definition of γ, please refer to the specification txt.
 %
 %   N : num of orbits. n : num of satellites in each orbit.
 
