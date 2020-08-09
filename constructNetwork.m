@@ -70,8 +70,7 @@ max_D = r * sqrt(2 + 2 * sin(angle));
 min_D = r * sqrt(2 - 2 * sin(angle));
 end
 
-% function that calculating the relative position of orbit j's fist
-% satellite, with respect to S_ik, which is described by theta. For the
-% definition of theta, please refer to the specification document.
+% function that calculating the relative position of orbit j's fist satellite, with respect to S_ik, 
+% which is described by theta. For the definition of theta, please refer to the specification document.
 function theta = caculateTheta()
 end
