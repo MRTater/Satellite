@@ -1,6 +1,6 @@
-function distance = SatelliteDistance(polar1, an_orbit, angle)
+function distance = SatelliteDistance_version0(polar1, polar2)
 %SatelliteDistance  : calculate the distance of two satellites
-%   receive the polar coordinates of two satellites
+%   receive the spherical coordinates of two satellites
 %   if the distance between two satellites is too long that their
 %   communication is blocked, set distance to -1.
 
