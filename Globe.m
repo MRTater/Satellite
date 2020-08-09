@@ -22,6 +22,5 @@ satellite_positions = initializeSatellitePositions(num_of_orbit, num_of_satellit
 
 % draw all satellite orbits
 drawOrbit(orbits,num_of_orbit);
-hold off
 %%
 

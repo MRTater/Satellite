@@ -32,7 +32,7 @@ pathVector = [u,pathVector,v];
 end
 
 function [pathVector] = path(u,v,map,pathVector)
-if(map(u,v) == 0)
+if map(u,v) == 0
     return
 end
 path(u,map(u,v),map);
