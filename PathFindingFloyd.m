@@ -11,13 +11,14 @@ input = [0 2 3 10
 
 [~,N] = size(input);
 map = zeros(N,N);
+output = zeros(N,N);
 % 获取输入矩阵的大小 并且创建一个一样大小的用于记录路径的map
 
 for k = 1 : N
-   for i =1 : N
-       for j = 1 : N
+   for i = 1 : N
+       for j = i : N
            if(input(i,j) > input(i,k) + input(k,j) && input(i,k) ~= -1 && input(k,j) ~= -1)
-               input(i,j) = input(i,k)+ input(k,j);
+               output(i,j) = input(i,k)+ input(k,j);
                map(i,j) = k;
            end
        end
@@ -27,7 +28,7 @@ end
 % map图表示两两卫星之间最短路径至少通过哪个点，随后可以用递归函数得到最短路径
 % u为起始 v为终点
 u = 2;v = 4;
-output = input;
+
 global pathVector;
 pathVector = [ ];
 pathVector = path(u,v,map);
