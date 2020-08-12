@@ -4,7 +4,7 @@ function networkM = constructNetwork(orbitM, satelliteM, num_of_satellites_each,
 %   input        orbitM : matrix storing orbits data
 %                satelliteM : matrix storing satellite position data
 %   output       networkM : an adjacency matrix, storing the edge weight of
-%                the network graph
+%                the network graph (satellite distance)
 %                we can only build and use the upper triangular of networkM, 
 %                since M(i, j) and M(j, i) are identical for undirected
 %                graph.
@@ -14,6 +14,7 @@ function networkM = constructNetwork(orbitM, satelliteM, num_of_satellites_each,
 
 global r;       % earth radius
 global d_max;   % max communicating distance between two satellites
+global orbitR;  % orbit radius
 
 N = num_of_orbit * num_of_satellites_each; % # of satellites in total 
 networkM = repmat(-1, N, N);               % preallocate space, initialize
@@ -78,7 +79,7 @@ for i = 1 : num_of_orbit
              index = j;
             while(1)
                 index = mod(index, num_of_satellites_each) + 1;
-                d = 2 * r * abs( sin( pi * (index - j) / num_of_satellites_each ) );
+                d = 2 * orbitR * abs( sin( pi * (index - j) / num_of_satellites_each ) );
                 if d > d_max
                     break;
                 end
@@ -86,7 +87,7 @@ for i = 1 : num_of_orbit
             end
              while(1)
                 index = mod(index - 2, num_of_satellites_each) + 1;
-                d = 2 * r * abs( sin( pi * (index - j) / num_of_satellites_each ) );
+                d = 2 * orbitR * abs( sin( pi * (index - j) / num_of_satellites_each ) );
                 if d > d_max
                     break;
                 end
@@ -101,19 +102,19 @@ end
 % under the assumption that all orbits are of same height
 function min_D = distance2orbit(orbit, sph)
 %   sph : the spherical coordinate of the satellite
-global r;
+global orbitR;
 % the angle between the normal vector of the orbit plane and satellite's position vector
-% use the central angle formula 用球心角公式算
+% use the central angle formula 
 angle = acos( cos(orbit.polar) * cos(sph(2) ) * cos(orbit.azim - sph(3)) + ...
                                                 sin(orbit.polar) * sin(sph(2)) ); 
-min_D = r * sqrt(2 - 2 * sin(angle));
+min_D = orbitR * sqrt(2 - 2 * sin(angle));
 end
 
 % function that finds the nearest satellite to S_ik in orbit j
 function num = findNearestSatellite(orbit, S_positions, sph)
 %   sph : the spherical coordinate of the satellite
 %   S_positions : position data of satellites on this orbit
-global r;
+global orbitR;
 num_of_satellites = length(S_positions);    % num_of_satellites_each
 % the angle between the normal vector of the orbit plane and satellite's position vector
 angle = acos( cos(orbit.polar) * cos(sph(2) ) * cos(orbit.azim - sph(3)) + ...
@@ -123,7 +124,7 @@ angle = acos( cos(orbit.polar) * cos(sph(2) ) * cos(orbit.azim - sph(3)) + ...
 % position of the 1st satellite on the orbit, with respect to S_ik, described by theta.
 % For the definition of theta, please refer to the specification document.
 d1 = SatelliteDistance(sph, orbit, S_positions(1));
-theta = (2 - (d1 / r)^2) / (2 * sin(angle));
+theta = (2 - (d1 / orbitR)^2) / (2 * sin(angle));
 d_2 = SatelliteDistance(sph, orbit, S_positions(2));
 d_n = SatelliteDistance(sph, orbit, S_positions(num_of_satellites));
 % compare d_2 and d_n to identify which side the nearest S lies in.
@@ -133,7 +134,7 @@ direction = (d_n >= d_2);
 % the central angle formed by two satellites in the orbit
 theta_S = 2 * pi / num_of_satellites;                                    
 
-num = 1 + direction * round(theta / theta_S);
+num = 1 - direction * round(theta / theta_S);
 num = mod(num - 1, num_of_satellites) + 1;
 
 end
