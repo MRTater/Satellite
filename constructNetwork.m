@@ -12,7 +12,6 @@ function networkM = constructNetwork(orbitM, satelliteM, num_of_satellites_each,
 %   unavialable entries are of value -1, e.g. too far to communication, or
 %   satellites DNE in that position
 
-global r;       % earth radius
 global d_max;   % max communicating distance between two satellites
 global orbitR;  % orbit radius
 

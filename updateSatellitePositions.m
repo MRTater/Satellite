@@ -10,8 +10,11 @@ function inputM = updateSatellitePositions(inputM, t)
 %             storing/modifying angle γ.
 %   t : time measured in minutes.
 
-% the angulr velocities of satellites
-w_E = 7.292 * 10^(-5);
+global orbitR;
+% the angular velocities of satellites
+GM = 6.67259 * 5.965 * 10^13;
+w_s = sqrt( GM / ( (orbitR)^3 * 10^9) );
+
 % convert t to seconds
 t = t * 60;
 
@@ -19,7 +22,7 @@ t = t * 60;
 %update the inputM.
 for i = 1 : r
     for j = 1 : c
-        inputM(r, c) = wrapTo2Pi( inputM(r, c) + w_E * t );
+        inputM(r, c) = wrapTo2Pi( inputM(r, c) + w_s * t );
     end
 end
 
