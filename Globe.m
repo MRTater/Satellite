@@ -2,10 +2,10 @@
 %draw the earth
 
 cla reset;
-load topo;
-global r;           % earth radius
+% global r;           % earth radius
 r = 6371;
 drawUI;
+hold on
 %==========================================================================
 %build the structure that storing orbit data and satellite data
 

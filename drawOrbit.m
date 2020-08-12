@@ -1,7 +1,6 @@
 function drawOrbit(orbits,num_of_orbit)
 %This function draws all satellite orbits in the same figure of the earth
 %first we derive the parameter of the circle, then use plot3 function.
-
 for i = 1 : num_of_orbit
     r = orbits(i).height + 6371;
     normalVector = [sin(orbits(i).polar) * cos(orbits(i).azim) sin(orbits(i).azim) * sin(orbits(i).polar) cos(orbits(i).polar)];
@@ -22,7 +21,7 @@ for i = 1 : num_of_orbit
     x=c1+r*a(1)*cos(theta)+r*b(1)*sin(theta);%  x coordinate in the circle
     y=c2+r*a(2)*cos(theta)+r*b(2)*sin(theta);%  y coordinate in the circle
     z=c3+r*a(3)*cos(theta)+r*b(3)*sin(theta);%  z coordinate in the circle
-
+    
     plot3(x,y,z)
 end
 

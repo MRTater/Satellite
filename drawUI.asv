@@ -164,7 +164,7 @@ if strcmp(action,'initialize')
       'Visible','on', ...
       'UserData',hndlList);
    % Now run the demo. With no arguments, "wrldtrv2" just draws the globe
-   drawSphere(6371);
+   drawSphere;
    
    watchoff(oldFigNumber);
    figure(figNumber);
