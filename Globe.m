@@ -5,9 +5,7 @@ cla reset;
 load topo;
 global r;           % earth radius
 r = 6371;
-s = drawSphere(r, 0, 0, 0);
-hold on;
-
+drawUI;
 %==========================================================================
 %build the structure that storing orbit data and satellite data
 
@@ -29,5 +27,4 @@ satellite_positions = initializeSatellitePositions(num_of_orbit, num_of_satellit
 
 % draw all satellite orbits
 drawOrbit(orbits,num_of_orbit);
-
-
+%==========================================================================
