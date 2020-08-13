@@ -7,7 +7,7 @@ end
 if strcmp(action,'initialize')
    oldFigNumber = watchon;
    figNumber = figure( ...
-      'Name',getString(message('MATLAB:demos:wrldtrv:TitleWorldTraveler')), ...
+      'Name','Satellite Network', ...
       'NumberTitle','off', ...
       'Visible','off');
    axes( ...
@@ -39,12 +39,12 @@ if strcmp(action,'initialize')
       'BackgroundColor',[0.5 0.5 0.5]);
    
    % ====================================
-   % The FLY button
+   % The Computation button
    btnNumber = 1;
    yPos = top-btnHt-(btnNumber-1)*(btnHt+spacing);
-   labelStr = getString(message('MATLAB:demos:wrldtrv:LabelFly'));
-   cmdStr = 'fly';
-   callbackStr = 'wrldtrv(''fly'');';
+   labelStr = 'Computation';
+   cmdStr = 'Computation';
+   callbackStr = 'drawUI(''Computation'');';
    
    % Generic button information
    btnPos = [left yPos-spacing btnWid btnHt];
@@ -56,58 +56,53 @@ if strcmp(action,'initialize')
       'Callback',callbackStr);
    
    % ====================================
-   % The ORIGIN CITY popup button
+   % The ORIGIN Latitude input button
    btnNumber = 2;
    yPos = top-btnHt-(btnNumber-1)*(btnHt+spacing);
-   labelStr = getString(message('MATLAB:demos:wrldtrv:LabelOrigin'));
-   popupStr = str2mat('Cape Town','Dakar','London','Miami','Moscow', ...
-      'Nairobi','Natick','New Delhi','Riyadh','Sao Paulo');
-   latLongData = [-34 18.3; 14.5 -17.5; 51.5 0; 25.7 -80; 55.7 37.5; ...
-      1.3 36.8; 42.3 -71.4; 28.5 77.1; 24.5 46.6; -23.5 -46.5];
+   labelStr = 'Origin Latitude';
+   cmdStr = 'Latitude';
+   callbackStr = 'drawUI(''Latitude'');';
    
    % Generic button information
    btnPos1 = [left yPos-spacing+btnHt/2 btnWid btnHt/2];
    btnPos2 = [left yPos-spacing btnWid btnHt/2];
-   uicontrol( ...
+   La1 = uicontrol( ...
       'Style','text', ...
       'Units','normalized', ...
       'Position',btnPos1, ...
       'String',labelStr);
-   popupHndl1 = uicontrol( ...
-      'Style','popup', ...
-      'Units','normalized', ...
-      'Position',btnPos2, ...
-      'String',popupStr, ...
-      'UserData',latLongData);
-   
+   La2 = uicontrol(...
+       'Style','edit',...
+       'Units','normalized',...
+       'Position',btnPos2,...
+       'CallBack',callbackStr);
    % ====================================
-   % The DESTINATION CITY popup button
+   % The ORIGIN Longtitude input button
    btnNumber = 3;
    yPos = top-btnHt-(btnNumber-1)*(btnHt+spacing);
-   labelStr = getString(message('MATLAB:demos:wrldtrv:LabelDestination'));
+   labelStr = 'Origin Longtitude';
+   cmdStr = 'Longtitude';
+   callbackStr = 'wrldtrv(''Longtitude'');';
    
    % Generic button information
    btnPos1 = [left yPos-spacing+btnHt/2 btnWid btnHt/2];
    btnPos2 = [left yPos-spacing btnWid btnHt/2];
-   uicontrol( ...
+   Long1 = uicontrol( ...
       'Style','text', ...
       'Units','normalized', ...
       'Position',btnPos1, ...
       'String',labelStr);
-   popupHndl2 = uicontrol( ...
-      'Style','popup', ...
-      'Units','normalized', ...
-      'Position',btnPos2, ...
-      'String',popupStr, ...
-      'Value',10, ...
-      'UserData',latLongData);
-   
+   Long2 = uicontrol(...
+       'Style','edit',...
+       'Units','normalized',...
+       'Position',btnPos2,...
+       'CallBack',callbackStr);
    % ====================================
    % The WESTERN HEMISPHERE radio button
    btnNumber = 4;
    yPos = top-btnHt-(btnNumber-1)*(btnHt+spacing);
    labelStr = getString(message('MATLAB:demos:wrldtrv:LabelWHemisphere'));
-   callbackStr = 'wrldtrv(''hemisphere'');';
+   callbackStr = 'drawUI(''hemisphere'');';
    
    % Generic button information
    btnPos = [left yPos-spacing btnWid btnHt];
@@ -124,7 +119,7 @@ if strcmp(action,'initialize')
    btnNumber = 5;
    yPos = top-btnHt-(btnNumber-1)*(btnHt+spacing);
    labelStr = getString(message('MATLAB:demos:wrldtrv:LabelEHemisphere'));
-   callbackStr = 'wrldtrv(''hemisphere'');';
+   callbackStr = 'drawUI(''hemisphere'');';
    
    % Generic button information
    btnPos = [left yPos-spacing btnWid btnHt];
@@ -137,16 +132,6 @@ if strcmp(action,'initialize')
       'Callback',callbackStr);
    
    % ====================================
-   % The INFO button
-   labelStr = getString(message('MATLAB:demos:shared:LabelInfo'));
-   callbackStr = 'wrldtrv(''info'')';
-   infoHndl = uicontrol( ...
-      'Style','push', ...
-      'Units','normalized', ...
-      'Position',[left bottom+btnHt+spacing btnWid btnHt], ...
-      'String',labelStr, ...
-      'Callback',callbackStr);
-   
    % ====================================
    % The CLOSE button
    labelStr = getString(message('MATLAB:demos:shared:LabelClose'));
@@ -159,10 +144,6 @@ if strcmp(action,'initialize')
       'Callback',callbackStr);
    
    % Uncover the figure
-   hndlList = [popupHndl1 popupHndl2 westHndl eastHndl];
-   set(figNumber, ...
-      'Visible','on', ...
-      'UserData',hndlList);
    % Now run the demo. With no arguments, "wrldtrv2" just draws the globe
    drawSphere(6371);
    
@@ -171,13 +152,7 @@ if strcmp(action,'initialize')
    
 elseif strcmp(action,'fly'),
    % ====================================
-   axHndl = gca;
-   figNumber = watchon;
-   hndlList = get(figNumber,'Userdata');
-   popupHndl1 = hndlList(1);
-   popupHndl2 = hndlList(2);
-   westHndl = hndlList(3);
-   eastHndl = hndlList(4);
+   
    
    % ====== Start of Demo
    % Wrldtrv problem
@@ -185,7 +160,10 @@ elseif strcmp(action,'fly'),
    
    % ====== End of Demo
    watchoff(figNumber);
-   
+elseif strcmp(action,'Latitude'),
+    
+elseif strcmp(action,'Longtitude'), 
+    
 elseif strcmp(action,'hemisphere'),
    axHndl = gca;
    figNumber = watchon;
@@ -218,8 +196,6 @@ elseif strcmp(action,'hemisphere'),
    end;
    watchoff(figNumber);
    
-elseif strcmp(action,'info'),
-   helpwin(mfilename)
    
 end;    % if strcmp(action, ...
 
