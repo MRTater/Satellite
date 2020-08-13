@@ -1,13 +1,16 @@
 %==========================================================================
 %draw the earth
+%==========================================================================
 
 cla reset;
 % global r;           % earth radius
 r = 6371;
 drawUI;
 hold on
+
 %==========================================================================
-%build the structure that storing orbit data and satellite data
+%import data, build the structure that storing orbit and satellite data
+%==========================================================================
 
 %Temporarily settings for testing. Values of the parameter can be modified later
 orbitHeight = 550;
@@ -25,6 +28,18 @@ orbitR = r + orbitHeight;
 orbits = constructOrbits(orbitHeight,num_of_orbit,num_of_satellites_each,input_polar_angle,input_azimuthal_angle);
 satellite_positions = initializeSatellitePositions(num_of_orbit, num_of_satellites_each);
 
-% draw all satellite orbits
-drawOrbit(orbits,num_of_orbit);
 %==========================================================================
+%construct the adjacency matrix of the network graph, find the shortest path
+%==========================================================================
+
+%A, B;==============================
+global pathVector;
+pathVector = [ ];
+
+
+%==========================================================================
+% draw all orbits, satellites along the shortest path and two ground points
+%==========================================================================
+
+drawOrbit(orbits,num_of_orbit);
+

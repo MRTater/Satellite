@@ -1,6 +1,6 @@
 
-function [output,pathVector] = PathFindingFloyd()
-%GOMORYHU_TREE 此处显示有关此函数的摘要
+function PathFindingFloyd()
+%PathFindingFloyd 
 %  输入出发点卫星的编号和结尾点卫星的编号，输入总卫星个数，以及连接矩阵(1,2表示1号卫星和2号卫星之间的权重，-1为距离无限远）
 %  N是矩阵大小
 input = [0 2 3 10
@@ -8,6 +8,8 @@ input = [0 2 3 10
          3 8 0 1
          10 10 1 0];
 %      测试输入
+
+global pathVector;
 
 [~,N] = size(input);
 map = zeros(N,N);
@@ -29,13 +31,12 @@ end
 % u为起始 v为终点
 u = 2;v = 4;
 
-global pathVector;
 pathVector = [ ];
-pathVector = path(u,v,map);
-pathVector = [u,pathVector,v]
+path(u,v,map);
+pathVector = [u,pathVector,v];
 end
 
-function [pathVector] = path(u,v,map)
+function path(u,v,map)
 global pathVector;
 if map(u,v) == 0
     return
