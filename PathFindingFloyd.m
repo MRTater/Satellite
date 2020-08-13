@@ -1,4 +1,3 @@
-
 function PathFindingFloyd(input, num_of_satellites_each, a, b)
 %PathFindingFloyd 
 %
@@ -16,7 +15,8 @@ global pathVector;
 [~,N] = size(input);
 map = zeros(N,N);
 output = zeros(N,N);
-% 获取输入矩阵的大小 并且创建一个一样大小的用于记录路径的map
+% get the size of the input matrix. construct a N*N matrix "map" used to
+% record intermediate nodes on the shortest path between two satellites
 
 for k = 1 : N
    for i = 1 : N
@@ -28,8 +28,10 @@ for k = 1 : N
        end
    end       
 end
-% time complexity : O(n^3) 最终得到output图 表示两两卫星之间最短权重距离
-% map图表示两两卫星之间最短路径至少通过哪个点，随后可以用递归函数得到最短路径
+% time complexity : O(n^3). 
+% map : recording the intermediate nodes on the shortest path between two 
+% satellites. hereafter, we can get the shortest path between u and v by 
+% recurrence.
 
 % u : index of the starting point. v : index of the end point.
 u = num_of_satellites_each * (a(1) - 1) + a(2);
