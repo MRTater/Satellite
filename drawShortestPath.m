@@ -1,6 +1,8 @@
 function [outputArg1,outputArg2] = drawShortestPath(inputArg1,inputArg2)
-%UNTITLED3 Summary of this function goes here
-%   Detailed explanation goes here
+%drawShortestPath : draw the shortest path, all satellites along 
+%                   the path and two ground points.
+%
+%  
 outputArg1 = inputArg1;
 outputArg2 = inputArg2;
 end
