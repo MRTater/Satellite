@@ -61,7 +61,7 @@ if strcmp(action,'initialize')
    yPos = top-btnHt-(btnNumber-1)*(btnHt+spacing);
    labelStr = 'Origin Latitude';
    cmdStr = 'Latitude';
-   callbackStr = 'drawUI(''Latitude'');';
+%    callbackStr = 'drawUI(''Latitude'');';
    
    % Generic button information
    btnPos1 = [left yPos-spacing+btnHt/2 btnWid btnHt/2];
@@ -75,19 +75,18 @@ if strcmp(action,'initialize')
        'Style','edit',...
        'Units','normalized',...
        'Position',btnPos2,...
-       'CallBack',callbackStr);
+       'CallBack',@inputLa);
+    
    % ====================================
    % The ORIGIN Longtitude input button
    btnNumber = 3;
    yPos = top-btnHt-(btnNumber-1)*(btnHt+spacing);
    labelStr = 'Origin Longtitude';
-   cmdStr = 'Longtitude';
-   callbackStr = 'wrldtrv(''Longtitude'');';
    
    % Generic button information
    btnPos1 = [left yPos-spacing+btnHt/2 btnWid btnHt/2];
    btnPos2 = [left yPos-spacing btnWid btnHt/2];
-   Long1 = uicontrol( ...
+   uicontrol( ...
       'Style','text', ...
       'Units','normalized', ...
       'Position',btnPos1, ...
@@ -96,41 +95,7 @@ if strcmp(action,'initialize')
        'Style','edit',...
        'Units','normalized',...
        'Position',btnPos2,...
-       'CallBack',callbackStr);
-   % ====================================
-   % The WESTERN HEMISPHERE radio button
-   btnNumber = 4;
-   yPos = top-btnHt-(btnNumber-1)*(btnHt+spacing);
-   labelStr = getString(message('MATLAB:demos:wrldtrv:LabelWHemisphere'));
-   callbackStr = 'drawUI(''hemisphere'');';
-   
-   % Generic button information
-   btnPos = [left yPos-spacing btnWid btnHt];
-   westHndl = uicontrol( ...
-      'Style','radiobutton', ...
-      'Units','normalized', ...
-      'Position',btnPos, ...
-      'String',labelStr, ...
-      'Value',1, ...
-      'Callback',callbackStr);
-   
-   % ====================================
-   % The EASTERN HEMISPHERE radio button
-   btnNumber = 5;
-   yPos = top-btnHt-(btnNumber-1)*(btnHt+spacing);
-   labelStr = getString(message('MATLAB:demos:wrldtrv:LabelEHemisphere'));
-   callbackStr = 'drawUI(''hemisphere'');';
-   
-   % Generic button information
-   btnPos = [left yPos-spacing btnWid btnHt];
-   eastHndl = uicontrol( ...
-      'Style','radiobutton', ...
-      'Units','normalized', ...
-      'Position',btnPos, ...
-      'String',labelStr, ...
-      'Value',0, ...
-      'Callback',callbackStr);
-   
+       'CallBack',@inputLong);
    % ====================================
    % ====================================
    % The CLOSE button
@@ -146,11 +111,10 @@ if strcmp(action,'initialize')
    % Uncover the figure
    % Now run the demo. With no arguments, "wrldtrv2" just draws the globe
    drawSphere(6371);
-   
    watchoff(oldFigNumber);
    figure(figNumber);
    
-elseif strcmp(action,'fly'),
+elseif strcmp(action,'Computation'),
    % ====================================
    
    
@@ -160,45 +124,20 @@ elseif strcmp(action,'fly'),
    
    % ====== End of Demo
    watchoff(figNumber);
-elseif strcmp(action,'Latitude'),
-    
-elseif strcmp(action,'Longtitude'), 
-    
-elseif strcmp(action,'hemisphere'),
-   axHndl = gca;
-   figNumber = watchon;
-   drawnow;
-   hndlList = get(figNumber,'Userdata');
-   popupHndl1 = hndlList(1);
-   popupHndl2 = hndlList(2);
-   westHndl = hndlList(3);
-   eastHndl = hndlList(4);
-   if gco == westHndl,
-      view(-90,25);
-      set(westHndl,'Value',1);
-      set(eastHndl,'Value',0);
-      popupStr = str2mat('Cape Town','Dakar','London','Miami','Moscow', ...
-         'Nairobi','Natick','New Delhi','Riyadh','Sao Paulo');
-      latLongData = [-34 18.3; 14.5 -17.5; 51.5 0; 25.7 -80; 55.7 37.5; ...
-         1.3 36.8; 42.3 -71.4; 28.5 77.1; 24.5 46.6; -23.5 -46.5];
-      set(popupHndl1,'String',popupStr,'UserData',latLongData);
-      set(popupHndl2,'String',popupStr,'UserData',latLongData,'Value',10);
-   else
-      view(90,25);
-      set(westHndl,'Value',0);
-      set(eastHndl,'Value',1);
-      popupStr = str2mat('Anchorage','Beijing','Guam','Honolulu','Natick', ...
-         'San Diego','Singapore','Sydney','Tokyo','Wellington');
-      latLongData = [61.2 -150; 40 116.4; 13.5 144.8; 21.3 -157.9; 42.3 -71.4; ...
-         32.6 -117.2; 1.3 103.9; -33.9 151.2; 35.6 139.7; -41.3 174.8];
-      set(popupHndl1,'String',popupStr,'UserData',latLongData);
-      set(popupHndl2,'String',popupStr,'UserData',latLongData,'Value',10);
-   end;
-   watchoff(figNumber);
-   
-   
-end;    % if strcmp(action, ...
+else
+    inputLa;
+    inputLong;
+end    % if strcmp(action, ...
 
 %  Restore Format
 set(0,'Format',old_format)
 
+function str = inputLa(~,~)
+    str = get(La2,'String');
+    La = str2double(str);
+end
+function str = inputLong(~,~)
+    str = get(Long2,'String');
+    Long = str2double(str);
+end
+end
