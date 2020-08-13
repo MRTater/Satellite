@@ -1,4 +1,4 @@
-function networkM = constructNetwork(orbitM, satelliteM, num_of_satellites_each, num_of_orbit)
+function networkM = constructNetwork(orbitM, satelliteM)
 %   assumptions: all orbits are of same height
 %                all orbits have same number of satellites
 %   input        orbitM : matrix storing orbits data
@@ -14,6 +14,8 @@ function networkM = constructNetwork(orbitM, satelliteM, num_of_satellites_each,
 
 global d_max;   % max communicating distance between two satellites
 global orbitR;  % orbit radius
+
+[num_of_orbit, num_of_satellites_each] = size(satelliteM);
 
 N = num_of_orbit * num_of_satellites_each; % # of satellites in total 
 networkM = repmat(-1, N, N);               % preallocate space, initialize
