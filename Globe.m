@@ -38,7 +38,8 @@ pathVector = [ ];
 
 
 %==========================================================================
-% draw all orbits, satellites along the shortest path and two ground points
+% draw all orbits, the shortest path, all satellites along the path
+% and two ground points.
 %==========================================================================
 
 drawOrbit(orbits,num_of_orbit);

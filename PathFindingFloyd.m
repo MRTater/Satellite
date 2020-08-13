@@ -1,13 +1,15 @@
 
-function PathFindingFloyd()
+function PathFindingFloyd(input, num_of_satellites_each, a, b)
 %PathFindingFloyd 
-%  输入出发点卫星的编号和结尾点卫星的编号，输入总卫星个数，以及连接矩阵(1,2表示1号卫星和2号卫星之间的权重，-1为距离无限远）
-%  N是矩阵大小
-input = [0 2 3 10
-         2 0 8 10
-         3 8 0 1
-         10 10 1 0];
-%      测试输入
+%
+%  find path from u to v
+%  
+%  input : network adjacency matrix, recording the distance
+%  a, b :  pairs of number [i, j], denoting staring S and the end S.
+%  N : matrix size
+%  
+%  pathVector is set to be a global variable, recording satellites along
+%  the path. It records their indexes in the adjacency matrix networkM.
 
 global pathVector;
 
@@ -26,10 +28,12 @@ for k = 1 : N
        end
    end       
 end
-% 复杂度n^3 最终得到output图 表示两两卫星之间最短权重距离
+% time complexity : O(n^3) 最终得到output图 表示两两卫星之间最短权重距离
 % map图表示两两卫星之间最短路径至少通过哪个点，随后可以用递归函数得到最短路径
-% u为起始 v为终点
-u = 2;v = 4;
+
+% u : index of the starting point. v : index of the end point.
+u = num_of_satellites_each * (a(1) - 1) + a(2);
+v = num_of_satellites_each * (b(1) - 1) + b(2);
 
 pathVector = [ ];
 path(u,v,map);
