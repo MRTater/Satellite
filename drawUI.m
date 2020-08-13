@@ -1,4 +1,8 @@
 function drawUI(action)
+global iLa;
+
+
+
 old_format = get(0,'Format');
 if nargin < 1
    action = 'initialize';
@@ -66,17 +70,17 @@ if strcmp(action,'initialize')
    % Generic button information
    btnPos1 = [left yPos-spacing+btnHt/2 btnWid btnHt/2];
    btnPos2 = [left yPos-spacing btnWid btnHt/2];
-   La1 = uicontrol( ...
+   uicontrol( ...
       'Style','text', ...
       'Units','normalized', ...
       'Position',btnPos1, ...
       'String',labelStr);
-   La2 = uicontrol(...
+   La1 = uicontrol(...
        'Style','edit',...
        'Units','normalized',...
        'Position',btnPos2,...
        'CallBack',@inputLa);
-    
+
    % ====================================
    % The ORIGIN Longtitude input button
    btnNumber = 3;
@@ -91,17 +95,73 @@ if strcmp(action,'initialize')
       'Units','normalized', ...
       'Position',btnPos1, ...
       'String',labelStr);
-   Long2 = uicontrol(...
+   Long1 = uicontrol(...
        'Style','edit',...
        'Units','normalized',...
        'Position',btnPos2,...
        'CallBack',@inputLong);
    % ====================================
+   % The Destination Latitude output button
+   btnNumber = 4;
+   yPos = top-btnHt-(btnNumber-1)*(btnHt+spacing);
+   labelStr = 'Destination Longtitude';
+   
+   % Generic button information
+   btnPos1 = [left yPos-spacing+btnHt/2 btnWid btnHt/2];
+   btnPos2 = [left yPos-spacing btnWid btnHt/2];
+   uicontrol( ...
+      'Style','text', ...
+      'Units','normalized', ...
+      'Position',btnPos1, ...
+      'String',labelStr);
+   La2 = uicontrol(...
+       'Style','edit',...
+       'Units','normalized',...
+       'Position',btnPos2,...
+       'CallBack',@outputLa);
    % ====================================
+   % The Destination Longtitude output button
+   btnNumber = 5;
+   yPos = top-btnHt-(btnNumber-1)*(btnHt+spacing);
+   labelStr = 'Destination Longtitude';
+   
+   % Generic button information
+   btnPos1 = [left yPos-spacing+btnHt/2 btnWid btnHt/2];
+   btnPos2 = [left yPos-spacing btnWid btnHt/2];
+   uicontrol( ...
+      'Style','text', ...
+      'Units','normalized', ...
+      'Position',btnPos1, ...
+      'String',labelStr);
+   Long2 = uicontrol(...
+       'Style','edit',...
+       'Units','normalized',...
+       'Position',btnPos2,...
+       'CallBack',@outputLong);
+    % ====================================
+   % The time input button
+   btnNumber = 6;
+   yPos = top-btnHt-(btnNumber-1)*(btnHt+spacing);
+   labelStr = 'Time';
+   
+   % Generic button information
+   btnPos1 = [left yPos-spacing+btnHt/2 btnWid btnHt/2];
+   btnPos2 = [left yPos-spacing btnWid btnHt/2];
+   uicontrol( ...
+      'Style','text', ...
+      'Units','normalized', ...
+      'Position',btnPos1, ...
+      'String',labelStr);
+   T = uicontrol(...
+       'Style','edit',...
+       'Units','normalized',...
+       'Position',btnPos2,...
+       'CallBack',@time);
+   % ====================================    
    % The CLOSE button
    labelStr = getString(message('MATLAB:demos:shared:LabelClose'));
    callbackStr = 'close(gcf)';
-   closeHndl = uicontrol( ...
+   uicontrol( ...
       'Style','push', ...
       'Units','normalized', ...
       'Position',[left bottom btnWid btnHt], ...
@@ -110,20 +170,16 @@ if strcmp(action,'initialize')
    
    % Uncover the figure
    % Now run the demo. With no arguments, "wrldtrv2" just draws the globe
-   drawSphere(6371);
-   watchoff(oldFigNumber);
-   figure(figNumber);
+    drawSphere(6371);
+    watchoff(oldFigNumber);
+    figure(figNumber);
    
-elseif strcmp(action,'Computation'),
+elseif strcmp(action,'Computation')
    % ====================================
    
-   
    % ====== Start of Demo
-   % Wrldtrv problem
-   drawSphere(6371);
    
    % ====== End of Demo
-   watchoff(figNumber);
 else
     inputLa;
     inputLong;
@@ -132,12 +188,29 @@ end    % if strcmp(action, ...
 %  Restore Format
 set(0,'Format',old_format)
 
-function str = inputLa(~,~)
-    str = get(La2,'String');
-    La = str2double(str);
+function iLa = inputLa(~,~)
+    global iLa;
+    str = get(La1,'String');
+    iLa = str2double(str);
 end
-function str = inputLong(~,~)
+function oLa = outputLa(~,~)
+    global oLa;
+    str = get(La2,'String');
+    oLa = str2double(str);
+end
+function iLong = inputLong(~,~)
+    global iLong;
+    str = get(Long1,'String');
+    iLong = str2double(str);
+end
+function oLong = outputLong(~,~)
+    global oLong;
     str = get(Long2,'String');
-    Long = str2double(str);
+    oLong = str2double(str);
+end
+function t = time(~,~)
+    global t;
+    str = get(T,'String');
+    t = str2double(str);
 end
 end
