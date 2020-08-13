@@ -189,19 +189,19 @@ function inputLa(~,~)
     str = get(La1,'String');
     iLa = str2double(str);
     end
-function oLa = outputLa(~,~)
+function outputLa(~,~)
     str = get(La2,'String');
     oLa = str2double(str);
 end
-function iLong = inputLong(~,~)
+function inputLong(~,~)
     str = get(Long1,'String');
     iLong = str2double(str);
 end
-function oLong = outputLong(~,~)
+function outputLong(~,~)
     str = get(Long2,'String');
     oLong = str2double(str);
 end
-function t = time(~,~)
+function time(~,~)
     str = get(T,'String');
     t = str2double(str);
 end
