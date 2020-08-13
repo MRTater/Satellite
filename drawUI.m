@@ -1,8 +1,5 @@
 function drawUI(action)
-global iLa;
-
-
-
+global iLa iLong oLa oLong t;
 old_format = get(0,'Format');
 if nargin < 1
    action = 'initialize';
@@ -173,7 +170,7 @@ if strcmp(action,'initialize')
     drawSphere(6371);
     watchoff(oldFigNumber);
     figure(figNumber);
-   
+
 elseif strcmp(action,'Computation')
    % ====================================
    
@@ -188,28 +185,23 @@ end    % if strcmp(action, ...
 %  Restore Format
 set(0,'Format',old_format)
 
-function iLa = inputLa(~,~)
-    global iLa;
+function inputLa(~,~)
     str = get(La1,'String');
     iLa = str2double(str);
-end
+    end
 function oLa = outputLa(~,~)
-    global oLa;
     str = get(La2,'String');
     oLa = str2double(str);
 end
 function iLong = inputLong(~,~)
-    global iLong;
     str = get(Long1,'String');
     iLong = str2double(str);
 end
 function oLong = outputLong(~,~)
-    global oLong;
     str = get(Long2,'String');
     oLong = str2double(str);
 end
 function t = time(~,~)
-    global t;
     str = get(T,'String');
     t = str2double(str);
 end
