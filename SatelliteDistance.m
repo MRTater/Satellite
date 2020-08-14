@@ -21,7 +21,7 @@ if distance > d_max
     distance = -1;
 end
 
-% usele codes
+% useless codes
 
 % [x y z] = sph2cart(azimuth polar r) correspondingly.
 %[cartesian1(1), cartesian1(2), cartesian1(3)] = sph2cart(polar1(3), polar1(2), polar1(1));

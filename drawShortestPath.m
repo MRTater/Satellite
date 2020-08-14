@@ -33,6 +33,7 @@ for i = 1 : N
                                    'LineWidth', 1, ...
                                    'MarkerSize', 9)
 end
+
 % draw the path 
 for i = 1 : N - 1
     X = [sphInf(i).x sphInf(i+1).x]; 

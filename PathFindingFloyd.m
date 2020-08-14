@@ -1,10 +1,10 @@
-function PathFindingFloyd(input, num_of_satellites_each, a, b)
+function PathFindingFloyd(input, num_of_satellites_each, s, e)
 %PathFindingFloyd 
 %
 %  find path from u to v
 %  
 %  input : network adjacency matrix, recording the distance
-%  a, b :  pairs of number [i, j], denoting staring S and the end S.
+%  s, e :  pairs of number [i, j], denoting staring S and the end S.
 %  N : matrix size
 %  
 %  pathVector is set to be a global variable, recording satellites along
@@ -34,8 +34,8 @@ end
 % recurrence.
 
 % u : index of the starting point. v : index of the end point.
-u = num_of_satellites_each * (a(1) - 1) + a(2);
-v = num_of_satellites_each * (b(1) - 1) + b(2);
+u = num_of_satellites_each * (s(1) - 1) + s(2);
+v = num_of_satellites_each * (e(1) - 1) + e(2);
 
 pathVector = [ ];
 path(u,v,map);

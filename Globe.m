@@ -3,7 +3,7 @@
 %==========================================================================
 
 cla reset;
-% global r;           % earth radius
+global r;           % earth radius
 r = 6371;
 drawUI;
 hold on

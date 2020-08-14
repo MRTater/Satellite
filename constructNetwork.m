@@ -106,8 +106,8 @@ function min_D = distance2orbit(orbit, sph)
 global orbitR;
 % the angle between the normal vector of the orbit plane and satellite's position vector
 % use the central angle formula 
-angle = acos( cos(orbit.polar) * cos(sph(2) ) * cos(orbit.azim - sph(3)) + ...
-                                                sin(orbit.polar) * sin(sph(2)) ); 
+angle = acos( cos(pi/2 - orbit.polar) * cos(sph(2) ) * cos(orbit.azim - sph(3)) + ...
+                                                sin(pi/2 - orbit.polar) * sin(sph(2)) ); 
 min_D = orbitR * sqrt(2 - 2 * sin(angle));
 end
 
@@ -118,8 +118,8 @@ function num = findNearestSatellite(orbit, S_positions, sph)
 global orbitR;
 num_of_satellites = length(S_positions);    % num_of_satellites_each
 % the angle between the normal vector of the orbit plane and satellite's position vector
-angle = acos( cos(orbit.polar) * cos(sph(2) ) * cos(orbit.azim - sph(3)) + ...
-                                                sin(orbit.polar) * sin(sph(2)) );
+angle = acos( cos(pi/2 - orbit.polar) * cos(sph(2) ) * cos(orbit.azim - sph(3)) + ...
+                                                sin(pi/2 - orbit.polar) * sin(sph(2)) );
                                             
 % to know which satellite is the nearest, need to calculate the relative 
 % position of the 1st satellite on the orbit, with respect to S_ik, described by theta.
