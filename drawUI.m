@@ -101,7 +101,7 @@ if strcmp(action,'initialize')
    % The Destination Latitude output button
    btnNumber = 4;
    yPos = top-btnHt-(btnNumber-1)*(btnHt+spacing);
-   labelStr = 'Destination Longtitude';
+   labelStr = 'Destination Latitude';
    
    % Generic button information
    btnPos1 = [left yPos-spacing+btnHt/2 btnWid btnHt/2];
@@ -166,7 +166,7 @@ if strcmp(action,'initialize')
       'Callback',callbackStr);
    
    % Uncover the figure
-   % Now run the demo. With no arguments, "wrldtrv2" just draws the globe
+   % Now run the demo. With no arguments, "drawUI" just draws the globe
     drawSphere(6371);
     watchoff(oldFigNumber);
     figure(figNumber);
