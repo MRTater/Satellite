@@ -166,7 +166,8 @@ if strcmp(action,'initialize')
       'Callback',callbackStr);
    
    % Uncover the figure
-   % Now run the demo. With no arguments, "drawUI" just draws the globe
+   % Now run the demo. With no arguments, "drawUI" just draws the globe and
+   % all orbits
     drawSphere(6371);
     watchoff(oldFigNumber);
     figure(figNumber);
