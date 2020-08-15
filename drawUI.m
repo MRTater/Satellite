@@ -8,12 +8,20 @@ global pathVector;  % vector storing numbers of satellites in the shortest path
 
 hold on
 
+x= 0;
+
 old_format = get(0,'Format');
 if nargin < 1
    action = 'initialize';
 end
 
 % =====================================
+
+x = x + 1;
+disp(num2str(x));
+
+
+
 %Temporarily settings for testing. parameter values 
 %can be modified in the future
 orbitHeight = 550;
@@ -35,7 +43,7 @@ satellite_positions = initializeSatellitePositions(num_of_orbit, num_of_satellit
 
 % ====================================
 %construct the adjacency matrix of the network graph
-networkGraph = constructNetwork(orbits, satellite_positions);
+networkGraph = constructNetworkBrute(orbits, satellite_positions);
 
 if strcmp(action,'initialize')
    oldFigNumber = watchon;
@@ -227,7 +235,7 @@ elseif strcmp(action,'Computation')
    orbits = updateOrbitPositions(orbits, t);
    satellite_positions = updateSatellitePositions(satellite_positions, t);
    % update the networkgraph matrix
-   networkGraph = constructNetwork(orbits, satellite_positions);
+   networkGraph = constructNetworkBrute(orbits, satellite_positions);
    end
    
    %======================================

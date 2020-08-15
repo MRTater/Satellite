@@ -40,6 +40,12 @@ v = num_of_satellites_each * (e(1) - 1) + e(2);
 pathVector = [ ];
 path(u,v,map);
 pathVector = [u,pathVector,v];
+
+
+pathVector
+
+
+
 end
 
 function path(u,v,map)

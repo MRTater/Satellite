@@ -34,7 +34,7 @@ min = Inf;  % positive infinity
 [row, col] = size(satelliteM);
 for i = 1 : row
     for j = 1 : col
-        sph = convert2sphCoordinate(orbitM(i), satelliteM(i, j));
+        sph = convert2SphCoordinate(orbitM(i), satelliteM(i, j));
         angle = acos( cos(elevA) * cos(sph(2) ) * cos(azimA - sph(3)) + ...
                                                       sin(elevA) * sin(sph(2)) );
         temp = r * angle;

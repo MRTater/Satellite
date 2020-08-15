@@ -26,10 +26,44 @@ for i = 1 : num_of_orbit
     for j = i + 1 : num_of_orbit          % each pair of two orbits 
         
         for k = 1 : num_of_satellites_each    % the k th satellite in the i th orbit, denoted by S_ik
+            
+            
+            
+            
+            
+            
+            
+            
+            x = [num2str(i), ' ', num2str(j), ' ',  num2str(k)];
+            
+            disp(x)
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
             % strategy that build edges between satellite S_ik and all satellites in orbit j 
             
-            % first calculate the sphere coordinate of S_ik
+            % first calculate the spherical coordinate of S_ik
+            
+            
+            
+            
+            
+            
             sphCoor_ik = convert2SphCoordinate(orbitM(i), satelliteM(i, k));
+            
+            iii1 = sphCoor_ik(1)
+            iii2 = sphCoor_ik(2)
+            iii3 = sphCoor_ik(3)
+
+            
+            
             
             % get the min distance S_ik to orbit j
             min_D = distance2orbit(orbitM(j), sphCoor_ik);
@@ -44,26 +78,53 @@ for i = 1 : num_of_orbit
             % n th satellite, so that can minimize useless trials (means returning an unavilable distance)
             a = num_of_satellites_each * (i - 1) + k;
             b = num_of_satellites_each * (j - 1);          % a, b : entry indexes
-            networkM(a, b + n) = SatelliteDistance(sphCoor_ik, orbitM(j), satelliteM(j, n));
+            d = SatelliteDistance(sphCoor_ik, orbitM(j), satelliteM(j, n));
                              % sphCoor_jn is calculated inside the function
+            if d <= d_max
+            networkM(a, b + n) = d;
+            else
+                continue;
+            end                 
                              
             % initialize edges of nearby satellites of n, break when meet one unavailable
             index = n;
+            
+            
+            
+            
+            
+            
+            t = 0;
+            
+            
+            
+            
+            
+            
             while(1)
                 index = mod(index, num_of_satellites_each) + 1;
                 d = SatelliteDistance(sphCoor_ik, orbitM(j), satelliteM(j, index));
-                if d > d_max
+                if d > d_max             
                     break;
                 end
+                
+                
+                
+                %t = t + 1
+                
+                
+                
+                
                 networkM(a, b + index) = d;
             end
             index = n;
+            
             while(1)
                 index = mod(index - 2, num_of_satellites_each) + 1;
                 d = SatelliteDistance(sphCoor_ik, orbitM(j), satelliteM(j, index));
                 if d > d_max
                     break;
-                end
+                end   
                 networkM(a, b + index) = d;
             end  
         end
@@ -119,7 +180,7 @@ function num = findNearestSatellite(orbit, S_positions, sph)
 global orbitR;
 num_of_satellites = length(S_positions);    % num_of_satellites_each
 % the angle between the normal vector of the orbit plane and satellite's position vector
-angle = acos( cos(pi/2 - orbit.polar) * cos(sph(2) ) * cos(orbit.azim - sph(3)) + ...
+angle = acos( cos(pi/2 - orbit.polar) * cos(sph(2)) * cos(orbit.azim - sph(3)) + ...
                                                 sin(pi/2 - orbit.polar) * sin(sph(2)) );
                                             
 % to know which satellite is the nearest, need to calculate the relative 
@@ -136,7 +197,21 @@ direction = (d_n >= d_2);
 % the central angle formed by two satellites in the orbit
 theta_S = 2 * pi / num_of_satellites;                                    
 
+
+format long
+testingsph = sph
+testingtheta = theta
+testingvalue = (2 - (d1 / orbitR)^2) / (2 * sin(angle))
+testingd1 = d1
+
+
 num = 1 - direction * round(theta / theta_S);
 num = mod(num - 1, num_of_satellites) + 1;
 
 end
+
+
+
+
+
+
