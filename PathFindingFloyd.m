@@ -12,18 +12,24 @@ function PathFindingFloyd(input, num_of_satellites_each, s, e)
 
 global pathVector;
 
+         
+
 [~,N] = size(input);
 map = zeros(N,N);
-output = zeros(N,N);
 % get the size of the input matrix. construct a N*N matrix "map" used to
 % record intermediate nodes on the shortest path between two satellites
 
 for k = 1 : N
    for i = 1 : N
-       for j = i : N
+       for j = 1 : N
            if(input(i,j) > input(i,k) + input(k,j) && input(i,k) ~= -1 && input(k,j) ~= -1)
-               output(i,j) = input(i,k)+ input(k,j);
+               input(i,j) = input(i,k)+ input(k,j);
                map(i,j) = k;
+               map(j,i) = k;
+           elseif(input(i,j) == -1 && input(i,k) ~= -1 && input(k,j) ~= -1)
+               input(i,j) = input(i,k) + input(k,j);
+               map(i,j) = k;
+               map(j,i) = k;
            end
        end
    end       
@@ -41,10 +47,7 @@ pathVector = [ ];
 path(u,v,map);
 pathVector = [u,pathVector,v];
 
-
 pathVector
-
-
 
 end
 
