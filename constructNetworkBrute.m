@@ -27,7 +27,6 @@ for i = 1 : num_of_orbit
     for j = i + 1 : num_of_orbit           % each pair of two orbits
             
         i
-        j
         for k = 1 : num_of_satellites_each     % the k th satellite in the i th orbit, denoted by S_ik
         
             % first calculate the spherical coordinate of S_ik
@@ -55,6 +54,34 @@ for i = 1 : num_of_orbit
             end
         end
     end
+end
+
+%initialize distance between satellites on the same orbit
+for i = 1 : num_of_orbit
+    for j = 1 : num_of_satellites_each
+            
+             a = num_of_satellites_each * (i - 1) + j;
+             b = num_of_satellites_each * (i - 1);     % a, b : entry indexes
+             
+             networkM(a, b + j) = 0;
+             index = j;
+            while(1)
+                index = mod(index, num_of_satellites_each) + 1;
+                d = 2 * orbitR * abs( sin( pi * (index - j) / num_of_satellites_each ) );
+                if d > d_max
+                    break;
+                end
+                networkM(a, b + index) = d;
+            end
+             while(1)
+                index = mod(index - 2, num_of_satellites_each) + 1;
+                d = 2 * orbitR * abs( sin( pi * (index - j) / num_of_satellites_each ) );
+                if d > d_max
+                    break;
+                end
+                networkM(a, b + index) = d;
+            end  
+    end 
 end
 
 end

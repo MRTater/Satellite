@@ -251,7 +251,7 @@ elseif strcmp(action,'Computation')
    drawSphere(6371);
    drawOrbit(orbits);
    drawGroundPoints(O); 
-   drawGroundPoints(O);
+   drawGroundPoints(D);
    drawShortestPath(orbits, satellite_positions);
    % ====== End of Demo
    

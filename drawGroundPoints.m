@@ -13,7 +13,7 @@ for i = 1 :N
     
 % first calculate cartesian coordinate from the longitude and latitude    
 elev = deg2rad(pointV(i).latitude);    
-azim = wrapTo2Pi( deg2rad(pointV(i).longitude) );
+azim = wrapTo2Pi( deg2rad(pointV(i).longitude) + pi);
 [x, y, z] = sph2cart(azim, elev, r);
 
 % draw the point
