@@ -7,11 +7,11 @@ if nargin == 1
     view(-90,25);
     colormap(topomap1);
     % Brighten the colormap for better annotation visibility:
-    brighten(.6)
+    brighten(.1);
     % Create and arrange the camera and lighting for better visibility:
     campos('auto');
-    camlight;
-    lighting gouraud;
+    %camlight;
+    %lighting gouraud;
     set(gca, ...
           'NextPlot','add', ...
           'Visible','off');

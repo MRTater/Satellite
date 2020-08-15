@@ -25,7 +25,7 @@ for i = 1 : num_of_orbit
     y = c2 + orbitR * a(2) * cos(theta) + orbitR * b(2) * sin(theta);%  y coordinate in the circle
     z = c3 + orbitR * a(3) * cos(theta) + orbitR * b(3) * sin(theta);%  z coordinate in the circle
     
-    plot3(x,y,z);
+    plot3(x,y,z, 'Color', '#EDB120','LineWidth', 0.1);
 end
 
 end

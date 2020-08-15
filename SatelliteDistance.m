@@ -1,8 +1,11 @@
 function distance = SatelliteDistance(polar1, an_orbit, angle)
 %SatelliteDistance  : calculate the distance of two satellites
-%   receive the polar coordinates of two satellites
+%   receive the spherical coordinates of two satellites
 %   if the distance between two satellites is too long that their
 %   communication is blocked, set distance to -1.
+%
+%   if any satellite lies in the z-axis, its azimuthal angle not existing,
+%   sphcoor(3) will be assigned 0, so that this function also works.
 %
 %   modified version. To make function constructNetwork more concise,
 %   converting satellite_jn's position into spherical coordinte is 
@@ -18,7 +21,7 @@ distance = sqrt( ...
                                                      sin(polar1(2)) * sin(polar2(2)) ) ...
                 );
 if distance > d_max
-    distance = -1;
+   distance = -1;
 end
 
 % useless codes

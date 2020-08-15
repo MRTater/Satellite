@@ -1,9 +1,41 @@
 function drawUI(action)
+
 global iLa iLong oLa oLong t;
+global r;   r = 6371;   %earth radius
+global d_max;       % max communicating distance between two satellites
+global orbitR;      % orbit radius
+global pathVector;  % vector storing numbers of satellites in the shortest path
+
+hold on
+
 old_format = get(0,'Format');
 if nargin < 1
    action = 'initialize';
 end
+
+% =====================================
+%Temporarily settings for testing. parameter values 
+%can be modified in the future
+orbitHeight = 550;
+num_of_satellites_each = 30;
+input_polar = [pi/2 5*pi/12 pi/4];
+input_azim = linspace(0, 11*pi/6, 12); 
+num_of_orbit = length(input_azim) * length(input_polar);
+
+d_max = 2 * sqrt(orbitHeight^2 + 2 * r * orbitHeight);
+orbitR = r + orbitHeight;
+
+TIME = 0;
+counter = 0;
+
+% ====================================
+% build the structure
+orbits = constructOrbits(orbitHeight, num_of_satellites_each,input_polar,input_azim);
+satellite_positions = initializeSatellitePositions(num_of_orbit, num_of_satellites_each);
+
+% ====================================
+%construct the adjacency matrix of the network graph
+networkGraph = constructNetwork(orbits, satellite_positions);
 
 if strcmp(action,'initialize')
    oldFigNumber = watchon;
@@ -164,23 +196,57 @@ if strcmp(action,'initialize')
       'Position',[left bottom btnWid btnHt], ...
       'String',labelStr, ...
       'Callback',callbackStr);
-   
+  
+   % =====================================
    % Uncover the figure
-   % Now run the demo. With no arguments, "drawUI" just draws the globe and
-   % all orbits
-    drawSphere(6371);
-    watchoff(oldFigNumber);
-    figure(figNumber);
-
+   %  With no arguments, the program just draws the globe and all orbits.
+   drawSphere(6371);
+   watchoff(oldFigNumber);
+   figure(figNumber);
+   
+   % draw all satellite orbits 
+   drawOrbit(orbits);
+   
 elseif strcmp(action,'Computation')
-   % ====================================
-   
    % ====== Start of Demo
+   % The 'Computation' botton must be clicked after all inputs being
+   % assigned valid values. 
+   % =====================================
+   % load positions of ground points.
+   O.longitude = iLong;                 % origin ground point
+   O.latitude =  iLa;
+   D.longitude = oLong;                 % destination ground point 
+   D.latitude = oLa;
    
+   %======================================
+   % first time click the botton, the program just shows the figure in t=0
+   % dynamic network will be shown from the twice click.
+   if counter ~= 0
+   % update the data
+   TIME = TIME + t;
+   orbits = updateOrbitPositions(orbits, t);
+   satellite_positions = updateSatellitePositions(satellite_positions, t);
+   % update the networkgraph matrix
+   networkGraph = constructNetwork(orbits, satellite_positions);
+   end
+   
+   %======================================
+   % find the start and end satellites,
+   % find the shortest path and store it in 'pathVector'.
+   [s(1), s(2)] = ground2Satellites(O, orbits, satellite_positions); % the starting satellite
+   [e(1), e(2)] = ground2Satellites(D, orbits, satellite_positions); % the ending satellite
+   pathVector = [];
+   PathFindingFloyd(networkGraph, num_of_satellites_each, s, e);
+   
+   %======================================
+   % draw all figures
+   drawSphere(6371);
+   drawOrbit(orbits);
+   drawGroundPoints(O); 
+   drawGroundPoints(O);
+   drawShortestPath(orbits, satellite_positions);
    % ====== End of Demo
-else
-    inputLa;
-    inputLong;
+   
 end    % if strcmp(action, ...
 
 %  Restore Format

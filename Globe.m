@@ -5,7 +5,6 @@
 cla reset;
 global r;           % earth radius
 r = 6371;
-drawUI;
 hold on
 
 %==========================================================================
@@ -15,9 +14,9 @@ hold on
 %Temporarily settings for testing. parameter values 
 %can be modified in the future
 orbitHeight = 550;
-num_of_satellites_each = 20;
-input_polar = [0 pi/12 pi/6 pi/4 pi/3 5*pi/12 17*pi/36];
-input_azim = linspace(0, 11*pi/12, 12); 
+num_of_satellites_each = 30;
+input_polar = [pi/2 5*pi/12 pi/4];
+input_azim = linspace(0, 11*pi/6, 12); 
 num_of_orbit = length(input_azim) * length(input_polar);
 
 global d_max;       % max communicating distance between two satellites

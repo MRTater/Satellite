@@ -36,6 +36,7 @@ for i = 1 : num_of_orbit
             if min_D > d_max       % S_ik can not connect with all S in orbit j,                                   
                 continue;          % skip to the next.
             end
+            
             % find the nearest satellite to S_ik in orbit j
             n = findNearestSatellite(orbitM(j), satelliteM(j,:), sphCoor_ik);
            
@@ -125,7 +126,7 @@ angle = acos( cos(pi/2 - orbit.polar) * cos(sph(2) ) * cos(orbit.azim - sph(3)) 
 % position of the 1st satellite on the orbit, with respect to S_ik, described by theta.
 % For the definition of theta, please refer to the specification document.
 d1 = SatelliteDistance(sph, orbit, S_positions(1));
-theta = (2 - (d1 / orbitR)^2) / (2 * sin(angle));
+theta = acos( (2 - (d1 / orbitR)^2) / (2 * sin(angle)) );
 d_2 = SatelliteDistance(sph, orbit, S_positions(2));
 d_n = SatelliteDistance(sph, orbit, S_positions(num_of_satellites));
 % compare d_2 and d_n to identify which side the nearest S lies in.
