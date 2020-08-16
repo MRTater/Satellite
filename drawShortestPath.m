@@ -20,10 +20,14 @@ sphInf = repmat( struct('index', [0,0], ...    % index = [i j] means this satell
 for i = 1 : N
     a = ceil(pathVector(i) / num_of_satellites_each);
     b = mod(pathVector(i), num_of_satellites_each); 
+    if b == 0
+        b = num_of_satellites_each;
+    end
+    
     temp = convert2SphCoordinate(orbitM(a), satelliteM(a, b));
     sphInf(i).index(1) = a;
     sphInf(i).index(2) = b;
-    [sphInf(i).x, sphInf(i).y, sphInf(i).z] = sph2cart(temp(3), temp(2), temp(1));
+    [sphInf(i).x, sphInf(i).y, sphInf(i).z] = sph2cart(temp(3) + pi, temp(2), temp(1));
 end
 
 % draw satellites

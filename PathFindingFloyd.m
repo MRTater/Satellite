@@ -20,6 +20,10 @@ map = zeros(N,N);
 % record intermediate nodes on the shortest path between two satellites
 
 for k = 1 : N
+    if mod(k, 50) == 0 || k == N
+        print = ['constructing : waiting ', num2str(k), ' of totally ',num2str(N)];
+        disp(print)
+    end
    for i = 1 : N
        for j = 1 : N
            if(input(i,j) > input(i,k) + input(k,j) && input(i,k) ~= -1 && input(k,j) ~= -1)

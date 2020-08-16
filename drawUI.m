@@ -8,20 +8,12 @@ global pathVector;  % vector storing numbers of satellites in the shortest path
 
 hold on
 
-x= 0;
-
 old_format = get(0,'Format');
 if nargin < 1
    action = 'initialize';
 end
 
 % =====================================
-
-x = x + 1;
-disp(num2str(x));
-
-
-
 %Temporarily settings for testing. parameter values 
 %can be modified in the future
 orbitHeight = 550;
@@ -231,7 +223,7 @@ elseif strcmp(action,'Computation')
    % dynamic network will be shown from the twice click.
    if counter ~= 0
    % update the data
-   TIME = TIME + t;
+   TIME = TIME + t
    orbits = updateOrbitPositions(orbits, t);
    satellite_positions = updateSatellitePositions(satellite_positions, t);
    % update the networkgraph matrix
@@ -254,6 +246,7 @@ elseif strcmp(action,'Computation')
    drawGroundPoints(D);
    drawShortestPath(orbits, satellite_positions);
    % ====== End of Demo
+   counter = counter + 1
    
 end    % if strcmp(action, ...
 
@@ -280,4 +273,5 @@ function time(~,~)
     str = get(T,'String');
     t = str2double(str);
 end
+
 end

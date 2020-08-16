@@ -46,5 +46,5 @@ D.latitude = 0;
 [s(1), s(2)] = ground2Satellites(O, orbits, satellite_positions); % the starting satellite
 [e(1), e(2)] = ground2Satellites(D, orbits, satellite_positions); % the ending satellite
 pathVector = [];
-MAP = PathFindingFloyd(networkGraph, num_of_satellites_each, s, e);
+PathFindingFloyd(networkGraph, num_of_satellites_each, s, e);
 
