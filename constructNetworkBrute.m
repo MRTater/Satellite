@@ -24,7 +24,8 @@ N = num_of_orbit * num_of_satellites_each; % # of satellites in total
 networkM = repmat(-1, N, N);               % preallocate space, initialize
 
 for i = 1 : num_of_orbit
-     print = ['constructing : waiting ', num2str(i), ' of totally ',num2str(num_of_satellites_each)];
+     print = ['constructing : waiting ', num2str(i), ' of ', ...
+                    num2str(num_of_satellites_each), ' in total.'];
      disp(print)
     for j = i + 1 : num_of_orbit           % each pair of two orbits
         for k = 1 : num_of_satellites_each     % the k th satellite in the i th orbit, denoted by S_ik

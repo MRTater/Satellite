@@ -5,6 +5,8 @@ global r;   r = 6371;   %earth radius
 global d_max;       % max communicating distance between two satellites
 global orbitR;      % orbit radius
 global pathVector;  % vector storing numbers of satellites in the shortest path
+global TIME;        % time passed in the model, measured from the initialization
+global counter;     % counts # of mouse clicking 'computation'
 
 hold on
 
@@ -14,6 +16,7 @@ if nargin < 1
 end
 
 % =====================================
+%declare variables
 %Temporarily settings for testing. parameter values 
 %can be modified in the future
 orbitHeight = 550;
@@ -24,18 +27,6 @@ num_of_orbit = length(input_azim) * length(input_polar);
 
 d_max = 2 * sqrt(orbitHeight^2 + 2 * r * orbitHeight);
 orbitR = r + orbitHeight;
-
-TIME = 0;
-counter = 0;
-
-% ====================================
-% build the structure
-orbits = constructOrbits(orbitHeight, num_of_satellites_each,input_polar,input_azim);
-satellite_positions = initializeSatellitePositions(num_of_orbit, num_of_satellites_each);
-
-% ====================================
-%construct the adjacency matrix of the network graph
-networkGraph = constructNetworkBrute(orbits, satellite_positions);
 
 if strcmp(action,'initialize')
    oldFigNumber = watchon;
@@ -69,7 +60,8 @@ if strcmp(action,'initialize')
       'Style','frame', ...
       'Units','normalized', ...
       'Position',frmPos, ...
-      'BackgroundColor',[0.5 0.5 0.5]);
+      'BackgroundColor',[0.5 0.5 0.5], ...
+      'HandleVisibility', 'off');
    
    % ====================================
    % The Computation button
@@ -86,7 +78,8 @@ if strcmp(action,'initialize')
       'Units','normalized', ...
       'Position',btnPos, ...
       'String',labelStr, ...
-      'Callback',callbackStr);
+      'Callback',callbackStr, ...
+      'HandleVisibility', 'off');
    
    % ====================================
    % The ORIGIN Latitude input button
@@ -103,11 +96,13 @@ if strcmp(action,'initialize')
       'Style','text', ...
       'Units','normalized', ...
       'Position',btnPos1, ...
-      'String',labelStr);
+      'String',labelStr, ...
+      'HandleVisibility', 'off');
    La1 = uicontrol(...
        'Style','edit',...
        'Units','normalized',...
        'Position',btnPos2,...
+       'HandleVisibility', 'off', ...
        'CallBack',@inputLa);
 
    % ====================================
@@ -123,11 +118,13 @@ if strcmp(action,'initialize')
       'Style','text', ...
       'Units','normalized', ...
       'Position',btnPos1, ...
-      'String',labelStr);
+      'String',labelStr, ...
+      'HandleVisibility', 'off');
    Long1 = uicontrol(...
        'Style','edit',...
        'Units','normalized',...
        'Position',btnPos2,...
+       'HandleVisibility', 'off', ...
        'CallBack',@inputLong);
    % ====================================
    % The Destination Latitude output button
@@ -142,11 +139,13 @@ if strcmp(action,'initialize')
       'Style','text', ...
       'Units','normalized', ...
       'Position',btnPos1, ...
-      'String',labelStr);
+      'String',labelStr, ...
+      'HandleVisibility', 'off');
    La2 = uicontrol(...
        'Style','edit',...
        'Units','normalized',...
        'Position',btnPos2,...
+       'HandleVisibility', 'off', ...
        'CallBack',@outputLa);
    % ====================================
    % The Destination Longtitude output button
@@ -161,11 +160,13 @@ if strcmp(action,'initialize')
       'Style','text', ...
       'Units','normalized', ...
       'Position',btnPos1, ...
-      'String',labelStr);
+      'String',labelStr, ...
+      'HandleVisibility', 'off');
    Long2 = uicontrol(...
        'Style','edit',...
        'Units','normalized',...
        'Position',btnPos2,...
+       'HandleVisibility', 'off', ...
        'CallBack',@outputLong);
     % ====================================
    % The time input button
@@ -180,11 +181,13 @@ if strcmp(action,'initialize')
       'Style','text', ...
       'Units','normalized', ...
       'Position',btnPos1, ...
-      'String',labelStr);
+      'String',labelStr, ...
+      'HandleVisibility', 'off');
    T = uicontrol(...
        'Style','edit',...
        'Units','normalized',...
        'Position',btnPos2,...
+       'HandleVisibility', 'off', ...
        'CallBack',@time);
    % ====================================    
    % The CLOSE button
@@ -195,9 +198,14 @@ if strcmp(action,'initialize')
       'Units','normalized', ...
       'Position',[left bottom btnWid btnHt], ...
       'String',labelStr, ...
-      'Callback',callbackStr);
+      'Callback',callbackStr, ...
+      'HandleVisibility', 'off');
   
    % =====================================
+   % initialization
+   TIME = 0;
+   counter = 0;
+   
    % Uncover the figure
    %  With no arguments, the program just draws the globe and all orbits.
    drawSphere(6371);
@@ -205,6 +213,7 @@ if strcmp(action,'initialize')
    figure(figNumber);
    
    % draw all satellite orbits 
+   orbits = constructOrbits(orbitHeight, num_of_satellites_each,input_polar,input_azim);
    drawOrbit(orbits);
    
 elseif strcmp(action,'Computation')
@@ -219,17 +228,19 @@ elseif strcmp(action,'Computation')
    D.latitude = oLa;
    
    %======================================
-   % first time click the botton, the program just shows the figure in t=0
+   % first time clicking the botton, the program shows the figure in t=0
    % dynamic network will be shown from the twice click.
-   if counter ~= 0
-   % update the data
-   TIME = TIME + t
-   orbits = updateOrbitPositions(orbits, t);
-   satellite_positions = updateSatellitePositions(satellite_positions, t);
+   
+   % initialize and update the data
+   TIME
+   counter
+   orbits = constructOrbits(orbitHeight, num_of_satellites_each,input_polar,input_azim);
+   orbits = updateOrbitPositions(orbits, TIME);
+   satellite_positions = initializeSatellitePositions(num_of_orbit, num_of_satellites_each);
+   satellite_positions = updateSatellitePositions(satellite_positions, TIME);
    % update the networkgraph matrix
    networkGraph = constructNetworkBrute(orbits, satellite_positions);
-   end
-   
+   TIME = TIME + t;
    %======================================
    % find the start and end satellites,
    % find the shortest path and store it in 'pathVector'.
@@ -240,13 +251,14 @@ elseif strcmp(action,'Computation')
    
    %======================================
    % draw all figures
+   clf
    drawSphere(6371);
    drawOrbit(orbits);
    drawGroundPoints(O); 
    drawGroundPoints(D);
    drawShortestPath(orbits, satellite_positions);
    % ====== End of Demo
-   counter = counter + 1
+   counter = counter + 1;
    
 end    % if strcmp(action, ...
 

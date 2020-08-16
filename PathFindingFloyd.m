@@ -21,7 +21,8 @@ map = zeros(N,N);
 
 for k = 1 : N
     if mod(k, 50) == 0 || k == N
-        print = ['constructing : waiting ', num2str(k), ' of totally ',num2str(N)];
+        print = ['constructing : waiting ', num2str(k), ...
+                          ' of ',num2str(N), ' in total.'];
         disp(print)
     end
    for i = 1 : N

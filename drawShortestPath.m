@@ -32,10 +32,17 @@ end
 
 % draw satellites
 for i = 1 : N
-    plot3(sphInf(i).x, sphInf(i).y, sphInf(i).z, '*', ...
-                                   'Color','#A2142F', ...
-                                   'LineWidth', 1, ...
-                                   'MarkerSize', 9)
+    figure_s = plot3(sphInf(i).x, sphInf(i).y, sphInf(i).z, '*', ...
+                                              'Color','#A2142F', ...
+                                                 'LineWidth', 1, ...
+                                                 'MarkerSize', 9);
+                                             
+                                             
+    set(figure_s, 'HandleVisibility', 'off');
+    
+    
+    
+    
 end
 
 % draw the path 
@@ -43,10 +50,24 @@ for i = 1 : N - 1
     X = [sphInf(i).x sphInf(i+1).x]; 
     Y = [sphInf(i).y sphInf(i+1).y];
     Z = [sphInf(i).z sphInf(i+1).z];
-    line(X,Y,Z, 'Color', 'red', ...
-                'LineWidth', 0.8   );
+    figure_line = line(X,Y,Z, 'Color', 'red', ...
+                            'LineWidth', 0.8   );
+                        
+                        
+    set(figure_line, 'HandleVisibility', 'off');   
+    
+    
+    
 end
 view(3);
+
+% print indexes of all satellites (pair of number[i, j])
+for i = 1 : N
+    print = ['satellite ', num2str(i), ' : [', ...
+             num2str(sphInf(i).index(1)), ' ', ...
+             num2str(sphInf(i).index(2)), ']'];
+    disp(print)
+end
 
 end
 

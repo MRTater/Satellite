@@ -18,6 +18,9 @@ if nargin == 1
     axis equal
 %     axis on
     set(get(gca,'Title'),'Visible','on')
+    
+    set(s, 'HandleVisibility', 'off');
+    
     % surf(r*x+centerx, r*y+centery, r*z+centerz);
 end
 
