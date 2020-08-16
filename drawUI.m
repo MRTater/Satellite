@@ -37,8 +37,9 @@ if strcmp(action,'initialize')
    axes( ...
       'Units','normalized', ...
       'Position',[0.05 0.03 0.60 0.90], ...
-      'Visible','off', ...
-      'NextPlot','add');
+      'Visible','on', ...
+      'NextPlot','add',...
+      'HandleVisibility', 'on');
    
    % ===================================
    % Information for all buttons
@@ -207,7 +208,7 @@ if strcmp(action,'initialize')
    counter = 0;
    
    % Uncover the figure
-   %  With no arguments, the program just draws the globe and all orbits.
+   % With no arguments, the program just draws the globe and all orbits.
    drawSphere(6371);
    watchoff(oldFigNumber);
    figure(figNumber);
@@ -222,6 +223,13 @@ elseif strcmp(action,'Computation')
    % assigned valid values. 
    % =====================================
    % load positions of ground points.
+   clf;
+   axes( ...
+      'Units','normalized', ...
+      'Position',[0.05 0.03 0.60 0.90], ...
+      'Visible','on', ...
+      'NextPlot','add',...
+      'HandleVisibility', 'on');
    O.longitude = iLong;                 % origin ground point
    O.latitude =  iLa;
    D.longitude = oLong;                 % destination ground point 
@@ -251,15 +259,14 @@ elseif strcmp(action,'Computation')
    
    %======================================
    % draw all figures
-   clf
    drawSphere(6371);
-   drawOrbit(orbits);
-   drawGroundPoints(O); 
-   drawGroundPoints(D);
-   drawShortestPath(orbits, satellite_positions);
+   orbitgraph = drawOrbit(orbits);
+   source = drawGroundPoints(O); 
+   sink = drawGroundPoints(D);
+   path = drawShortestPath(orbits, satellite_positions);
    % ====== End of Demo
    counter = counter + 1;
-   
+%    delete([orbitgraph source sink]);
 end    % if strcmp(action, ...
 
 %  Restore Format
